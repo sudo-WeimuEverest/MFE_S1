@@ -22,7 +22,7 @@ $$
 \Pi = \lambda \Sigma \omega_{mkt}
 $$
 
-> 投资者的风险厌恶系数lambda需要根据经验指定
+> 投资者的风险厌恶系数 $\lambda$ 需要根据经验指定
 
 - 得到市场预期
   $$
@@ -33,13 +33,22 @@ $$
   \epsilon_{\Pi} \sim N(0, \tau\Sigma)
   $$
 
-  
 
-（从CAPM出发也可以得到相应的均衡组合，求得市场风险价格）*见图片
+（从CAPM出发也可以得到相应的均衡组合，求得市场风险价格）
 
-2. 允许投资者对期望收益的不同看法（但是有基准的市场收益率）
+New Combined Return Vector: $E[R] = [(\tau\Sigma)^{-1}+P'\Omega^{-1}P]^{-1}[(\tau\Sigma)^{-1}\Pi+P'\Omega^{-1}Q]$
 
-   可以只针对个别的资产有其特殊观点，如“我预期A的收益将超过B的收益”，“我预期明年资产C的收益将达到Y”
+> $\tau$ 代表了市场隐含收益率 $\Pi$ 相对于期望收益率 $\mu$ 的误差
+> $$
+> \Pi = \mu + \epsilon \quad \epsilon \sim N(0, \tau \Sigma) 
+> $$
+> 
+
+1. 允许投资者对期望收益的不同看法（但是有基准的市场收益率）
+
+   可以只针对个别的资产有其特殊观点，如“我预期A的收益将超过B的收益”，“我预期明年资产C的收益将达到Y” 
+
+   核心假设如下：
    $$
    q = P \mu + \epsilon_{q}
    $$
@@ -50,17 +59,22 @@ $$
 
    q是K维向量，P是K * N，K是投资者观点个数
 
-3. 融合预期
+   ![1569135365553](C:\Users\Lenovo\AppData\Roaming\Typora\typora-user-images\1569135365553.png)
+
+2. 融合预期
    $$
    y = X\mu + \epsilon
    $$
-   
 
    由GLS可得到收益率的估计
 
-4. 放入马科维茨的最优化模型，对最优权重进行相应调整
+   ![1569136358275](C:\Users\Lenovo\AppData\Roaming\Typora\typora-user-images\1569136358275.png)
+
+3. 放入马科维茨的最优化模型，对最优权重进行相应调整
 
    权重变化主要集中在投资者观点与均衡观点有偏差的部分，没有观点的部分资产的权重有稳定性
+
+   ![1569139069840](C:\Users\Lenovo\AppData\Roaming\Typora\typora-user-images\1569139069840.png)
 
 ### 优点
 
