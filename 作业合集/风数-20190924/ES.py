@@ -1,14 +1,10 @@
 # -*- coding: utf-8 -*-
-"""
-Spyder Editor
+import time
 
-This is a temporary script file.
-"""
-import numpy as np 
 import matplotlib.pyplot as plt
+import numpy as np
 import scipy.stats as stats
 from numba import autojit
-import time
 
 start =time.time()
 
@@ -22,13 +18,13 @@ def func(a,mu,sigma,n):
 
 @autojit
 def main(lists):
-    for n in range (200,10000):
+    for n in range (200,100000):
         f = func(a,mu,sigma,n)
         lists.append(f)
     es = mu + sigma * stats.norm.pdf(stats.norm.ppf(a))/(1-a)
     plt.axhline(y = es, color='r',linestyle='-')
     plt.plot(ES)
-    plt.savefig('es.jpg')
+    plt.savefig('C:\\Users\\Lenovo\\Desktop\\tRandom.jpg')
 
 ES = []
 if __name__ == '__main__':
