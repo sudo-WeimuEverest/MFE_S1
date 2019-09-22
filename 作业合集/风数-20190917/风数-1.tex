@@ -1,0 +1,214 @@
+\documentclass{article}
+\usepackage{ctex}
+\usepackage{amsfonts}
+\usepackage{amsmath}
+\usepackage{amstext}
+\usepackage{amssymb}
+\linespread{1.5}
+\usepackage[top=1in, bottom=1in, left=1in, right=1in]{
+	geometry}
+
+\begin{document}
+
+\begin{flushleft}
+	课程名称：《风险管理的数学方法》\\
+	提交日期：2019年9月17日\\
+	姓名：胡庆涛\\
+	学号：1901210003\\ 
+\end{flushleft}
+
+\begin{center}
+ \LARGE BS公式的推导及解释
+\end{center}
+
+\begin{flushleft}
+	 $C^{BS}(s,S,r,\sigma,K,T) = SN(d_{1})-Ke^{-r(T-s)}N(d_{2})$\\
+	 其中，$d_{1}=\frac{ln(S/K)+(r+\frac{1}{2}\sigma^{2})(T-s)}{\sigma\sqrt{T-s}}$\\
+	  $d_{2} = d_{1}-\sigma\sqrt{T-s}$
+\end{flushleft}
+
+\section{基本假设}
+\begin{enumerate}
+	\item 证券无限可分且可被做空
+	\item 市场无摩擦
+	\item 市场不存在无风险套利机会
+	\item 短期无风险利率r为常数，且对所有期限相同
+	\item 标的资产的交易连续,且期限内不支付股息
+	\item 股票价格服从几何布朗运动（股票的不确定性满足对数正态分布）\\
+	$ dS = \mu Sdt + \sigma Sdz $\\
+	$\mu$与$\sigma$均为常数\\
+	其中，z服从标准布朗运动，满足$ \Delta z = \epsilon\sqrt{\Delta t} $
+\end{enumerate}
+
+	$ lnS(T) \sim N [lnS(0)+(\mu-\frac{\sigma ^2}{2})T,\quad \sigma^2T] $
+\newpage 
+\section{推导思路1：风险中性定价}
+\begin{itemize}
+	\item 证明对数正态分布的关系式\\
+	设$ S $服从对数正态分布，$lnS$标准差为$\omega$,则\\
+	\[ E(max(S-K,0)) = E(S)N(d_{1})-KN(d_{2}) \] 
+	$ d_{1} = \frac{ln(E(S)/K) + \frac{\omega^2}{2}}{\omega} $\\
+	$ d_{2} = \frac{ln(E(S)/K) - \frac{\omega^2}{2}}{\omega} $\\
+	证明如下：\\
+	定义$ g(S) $ 为S的概率密度函数，则有：
+	\[E(max(S-K,0)) = \int_{K}^{\infty}(S-K)g(S)dS\] 
+	而$lnS$服从正态分布，且标准差为$ \omega $，均值为$ m = ln(E(S)) - \frac{\omega^2}{2} $\\
+	进行标准化，定义$ Q = \frac{lnS - m}{\omega} $\\
+	易知，$ h(Q) = \frac{1}{\sqrt{2\pi}} e^\frac{- Q^2}{2}$,进行积分变换可得\\
+	\begin{align}
+	 E(max(S-K),0) 
+	 & = \int_{(lnK-m)/\omega}^{\infty}(e^{Q\omega+m} - K) h(Q)dQ\\
+	 \nonumber e^{Q\omega+m}h(Q) 
+	 & = \frac{1}{\sqrt{z\pi}}e^{(-Q^2+2Q\omega+2m)}/2 \\
+	\nonumber & = \frac{1}{\sqrt{z\pi}}e^{(-(Q - \omega)^2+2Q\omega+2m+\omega^2)}/2\\
+	\nonumber & = \frac{e^{m+\omega^2}}{\sqrt{2\pi}}e^{-(Q-\omega)^2/2}\\
+	\nonumber & = e^{m+\omega^2/2}h(Q-\omega)
+	\end{align}
+	故$ (1) $式变为：\\
+	\[E(max(S-K),0) 
+	=\underbrace{e^{m+\omega^2}\int_{(lnK-m)/\omega}^{\infty}
+	h(Q-\omega)dQ}_{\textcircled{1}} 
+	-\underbrace{K\int_{(lnK-m)/\omega}^{\infty}h(Q)dQ}_{\textcircled{2}}\]
+	定义$ N(x) $表示标准正态分布变量小于$ x $的概率，则\\
+	\textcircled{1}式中积分为$ N(\frac{ln(E(S)-K)+\omega^2/2}{\omega})=N(d_{1}) $\\
+	\textcircled{2}式积分为$ N(\frac{ln(E(S)-K)-\omega^2/2}{\omega})=N(d_{2}) $\\
+	\[ E(max(S-K,0)) = e^{m+\omega^2}N(d_{1})-KN(d_{2}) \] 
+	\item 代入欧式看涨期权的情形\\
+	时刻$ T$到期，$s$时刻股票价格为$S$，不支付股息，
+	期权的执行价格为$K$，无风险利率为$r$，股票价格的波动率为$\sigma $,欧式看涨期权价格为:\\
+	\[C^{BS}= e^{-r(T-s)}E(max(S-K,0))\]
+	又因在$BS$假定及风险中性世界中，$ E(S)=Se^{-r(T-s)}$，$ lnS $标准差为$ \sigma\sqrt{T} $，代入可得：
+	\[C^{BS}(s,S,r,\sigma,K,T) = SN(d_{1})-Ke^{-r(T-s)}N(d_{2})\]
+	其中，$d_{1}=\frac{ln(S/K)+(r+\frac{1}{2}\sigma^{2})(T-s)}{\sigma\sqrt{T-s}}$\\
+	$d_{2} = d_{1}-\sigma\sqrt{T-s}$
+	\item 公式解释\\
+	可将$ N(d_{2}) $理解为风险中性世界中期权被行使的概率，$ SN(d_{1})e^{-r(T-s)} $是$ S>K $时为S，
+	其他情况为零的变量在风险中性世界中的期望值，故期权在T时刻的期望值等于：
+	\[SN(d_{1})e^{-r(T-s)}-KN(d_{2})\]
+	贴现到时刻s即为期权的定价公式。
+\end{itemize}
+\section{推导思路2：伊藤引理}
+\begin{itemize}
+	\item 推导对数正态分布\\
+\begin{align}
+	dS = \mu Sdt + \sigma Sdz
+\end{align}
+	由伊藤引理，对于伊藤过程$ dx = a(t,x)dt + b(t,x)dz$\\
+    则对G（x,t),泰勒展开即得：\\
+    $dG = (\frac{\partial G}{\partial x}a + \frac{\partial G}{\partial t} +\frac{1}{2}\frac{\partial^2 G}{\partial x^2}b^2)dt
+    +\frac{\partial G}{\partial z}bdz	$\\
+    对于上式，令$ G = lnS $,各项代入可得\\
+\begin{align} 
+dlnS = (\frac{\partial G}{\partial x}\mu S + \frac{\partial G}{\partial t} +\frac{1}{2}\frac{\partial^2 G}{\partial x^2}\sigma^2 S^2)dt
++\frac{\partial G}{\partial z}\sigma Sdz 
+\end{align}
+	整理得，$dlnS = (\mu - \frac{\sigma^2}{2})dt +  \sigma dz$\\
+	又$\Delta z = \epsilon\sqrt{\Delta t}$，$ \Delta t= T - s $\\
+	则有$ \Delta G = (\mu - \frac{\sigma^2}{2})\Delta t 
+	+ \sigma \epsilon\sqrt{\Delta t} $,
+	得$\Delta G \sim N [ (\mu - \frac{\sigma^2}{2})\Delta t, \sigma^2 \Delta t]$\\
+	而$\Delta lnS = lnS_{T} -lnS_{0}$，
+	则$lnS_{T}\sim N[ lnS_{0} + (\mu - \frac{\sigma^2}{2})\Delta t, \sigma^2 \Delta t]$
+
+	\item 对期权价格使用伊藤引理，设期权价格为$C^{BS}$,
+	则$C^{BS} = f(S, t)$\\
+\begin{align} 
+dC^{BS} = (\frac{\partial C^{BS}}{\partial x}\mu S + \frac{\partial C^{BS}}{\partial t} +\frac{1}{2}\frac{\partial^2 C^{BS}}{\partial x^2}\sigma^2 S^2)dt
++\frac{\partial C^{BS}}{\partial z}\sigma Sdz 
+\end{align}
+\item 利用股票和期权构建投资组合\\
+\[\text{卖空1单位期权}
+\qquad \text{买入}\frac{\partial C^{BS}}{\partial S}\text{单位的股票} \]
+则该组合价值为：$ \Pi = - C^{BS} + \frac{\partial C^{BS}}{\partial S} S$
+在时间间隔$ \Delta t $内变化为：\\
+\begin{align}
+\Delta \Pi =  -\Delta C^{BS} + \frac{\partial C^{BS}}{\partial S} \Delta S
+\end{align}
+由风险中性，可知$\Delta \Pi = r \Delta t \Pi $
+将组合价值上式和(4)式代入(5)式得\\
+\begin{align}
+\frac{\partial C^{BS}}{\partial t} + r S \frac{\partial C^{BS}}{\partial S}
++ \frac{1}{2} \sigma^2 S^2 \frac{\partial^2 C^{BS}}{\partial S^2} 
+= r C^{BS}
+\end{align}
+上式（6）即为BS公式的微分方程\\
+该方程边界条件为：$ t = T \text{时，} C^{BS} = max(S-K,0)$\\
+求解可得：$C^{BS}(s,S,r,\sigma,K,T) = SN(d_{1})-Ke^{-r(T-s)}N(d_{2})$\\
+其中, $d_{1}=\frac{ln(S/K)+
+		(r+\frac{1}{2}\sigma^{2})(T-s)}{\sigma\sqrt{T-s}}$\\
+	$d_{2} = d_{1}-\sigma\sqrt{T-s}$
+
+\end{itemize}
+
+\section{希腊值的推导及解释}
+上述公式中s以年为单位计算，现将其进行转换，记作$ t\Delta $,t以日历天计数，期权的在t天的价值为：\\
+\[V_{t}= C^{BS}(t\Delta, S_{t, r_{t}, \sigma_{t}, K, T})\]
+风险因子改变记为：\
+\[X_{t+1}= (lnS_{t+1}-lnS_{t}, r_{t+1}-r_{t}, \sigma_{t+1}-\sigma_{t})\]
+故损失的一阶近似为：\
+\[L^{\Delta}_{t+1}= -(C^{BS}_{s}\Delta + C^{BS}_{S}S_{t}X_{t+1,1}
++ C^{BS}_{r}X_{t+1,2}+ C^{BS}_{\sigma}X_{t+1,3})\]
+欧式看涨期权价格为：
+\[C^{BS}(s,S,r,\sigma,K,T) = SN(d_{1})-Ke^{-r(T-s)}N(d_{2})\]
+其中,$ d_{1}=\frac{ln(S/K)+
+	(r+\frac{1}{2}\sigma^{2})(T-s)}{\sigma\sqrt{T-s}}$\\
+$d_{2} = d_{1}-\sigma\sqrt{T-s}$\\
+$N(x)$表示标准正态分布变量小于$ x $的概率，故$ N^{'}(x)= \frac{1}{\sqrt{2\pi}} e^{-\frac{x^2}{2}}$
+\begin{align}
+\nonumber N^{'}(d_{1}) & = N^{'}(d_{2}+\sigma\sqrt{T-s})\\
+\nonumber  & = \frac{1}{\sqrt{2\pi}}exp[-\frac{d_{2}^2}{2}-\sigma d_{2}\sqrt{T-s}
+-\frac{1}{2}\sigma^2](T-s)\\
+\nonumber  & =N^{'}(d_{2}exp[-\sigma d_{2}\sqrt{T-s}-\frac{1}{2}\sigma ^{2}(T-s)])
+\end{align}
+故有，
+\[SN^{'}(d_{1}) = Ke^{-r(T-s)}N^{'}(d_{2})\]
+\begin{itemize}
+	\item 期权的Delta\\
+	期权的Delta定义为期权价格变动与标的资产价格变动的比率\\
+	故对于欧式看涨期权\\
+	\begin{align}
+	\nonumber \Delta & = \frac{\partial C^{BS}}{\partial S}\\
+	\nonumber  & = N(d_{1}) 
+	\end{align}
+	\item 期权的Gamma\\
+	期权的Gamma表示期权Delta随标的资产价格变化的比率，即期权价格关于标的资产价格的二阶导，度量期权价格与标的资产价格关系的曲率\\
+	\begin{align}
+	\nonumber \Gamma & = \frac{\partial^2 C^{BS}}{\partial S^2}\\
+	\nonumber  & = \frac{N^{'}(d_{1})}{S\sigma\sqrt{T-s}} 
+	\end{align}
+	\item  期权的Theta\\
+	期权的Theta定义为期权价格变动随时间变化的比率\\
+	故对于欧式看涨期权\\
+	\begin{align}
+	\nonumber \Theta & = \frac{\partial C^{BS}}{\partial s}\\
+	\nonumber  & = SN^{'}(d_{1}\frac{\partial d_{1}}{\partial s}) -
+	rKe^{-r(T-s)N(d_{2})}-Ke^{-r(T-s)}N^{'}(d_{2})\frac{\partial d_{2}}{\partial s}\\
+	\nonumber  & =-rKe^{-r(T-s)}N(d_{2}) + SN^{'}(d_{1})(\frac{\partial d_{1}}{\partial s}-\frac{\partial d_{2}}{\partial s})\\
+	\nonumber  & = -rKe^{-r(T-s)}N(d_{2}) + SN^{'}(d_{1})\frac{\partial }{\partial s}(\sigma\sqrt{T-s})\\
+	\nonumber  & = -rKe^{-r(T-s)}N(d_{2}) - SN^{'}(d_{1})\frac{\sigma}{2\sqrt{T-s}}
+	\end{align} 
+	该公式s以年为单位，可进行转换计算天的Theta。
+	\item Delta、Theta与Gamma的关系\\
+	上文推导BS公式的微分方程时得到公式(6)如下：\\
+	\[\frac{\partial C_{BS}}{\partial t} + r S \frac{\partial C_{BS}}{\partial S}
+	+ \frac{1}{2} \sigma^2 S^2 \frac{\partial^2 C_{BS}}{\partial S^2} 
+	= r C^{BS}\]
+	分别代入三个希腊值后可得\\
+	\[\Theta + rS \Delta + \frac{1}{2}\sigma^2S^2\Gamma = r C^{BS}\]
+	\item 期权的Rho\\
+	期权的Rho定义为期权价格变动随利率变化的比率\\
+	故对于欧式看涨期权\\
+	\begin{align}
+	\nonumber \varrho & = \frac{\partial C^{BS}}{\partial r}\\
+	\nonumber  & = K(T-s)e^{-r(T-s)}N(d_{2}) 
+	\end{align}
+	\item 期权的Vega\\
+	期权的Vega定义为期权价格变动随资产波动率变化的比率\\
+	故对于欧式看涨期权\\
+	\begin{align}
+	\nonumber \mathcal{V} & = \frac{\partial C^{BS}}{\partial \sigma}\\
+	\nonumber  & = SN^{'}(d_{1})\frac{\sqrt{T-s}}{2} + Ke^{-r(T-s)}N^{'}(d_{2}) \frac{\sqrt{T-s}}{2}
+	\nonumber  & =S\sqrt{T-s}N^{'}(d_{1})
+	\end{align}
+\end{itemize}
+\end{document}
