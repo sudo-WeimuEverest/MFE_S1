@@ -37,10 +37,10 @@ double StockMC(
     double drift = Mu * dt; //初始化漂移项； 
     double shock;
     
-    char filename[1314];
+    char filename[1314];//初始化列表
     for(unsigned long number = 1; number <= NumberOfPaths; number++){
         double price = Spot; //每条路径初始价格统一
-        sand(number); //每次生成随机数使用不同的种子
+        srand(number); //每次生成随机数使用不同的种子
 
         sprintf(filename,"C:\\Users\\Lenovo\\Desktop\\price\\%ld.txt",number); //实现数字与字符的转换
         ofstream fout(filename); //数据分路径储存在txt文件中
@@ -55,6 +55,7 @@ double StockMC(
     } 
     return 0;
 }
+
 
 int main(){
     double Spot;
