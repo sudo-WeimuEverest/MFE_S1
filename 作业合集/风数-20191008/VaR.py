@@ -44,7 +44,8 @@ def por_VaR(P,W):
     W_A = Weight.reshape(len(Weight),1)
     B = np.dot(Sigma, W_A)
     var = np.dot(W_T, B) #计算得到投资组合的方差
-    por_VaR = norm.ppf(a) * np.sqrt(var[0][0]) * total#计算投资组合的VaR
+    por_VaR = norm.ppf(a) * np.sqrt(var[0][0]) 
+    * total#计算投资组合的VaR
     por_VaR = round(por_VaR,4)
     return por_VaR
 
