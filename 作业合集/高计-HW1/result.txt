@@ -1,0 +1,22 @@
+	(1)
+VARIABLES	lwage
+	
+exper	0.0398***
+	(0.0134)
+expersq	-0.000781*
+	(0.000402)
+educ	0.108***
+	(0.0144)
+age	-0.00147
+	(0.00529)
+kidslt6	-0.0607
+	(0.0888)
+kidsge6	-0.0146
+	(0.0279)
+Constant	-0.421
+	(0.317)
+	
+Observations	428
+R-squared	0.158
+Standard errors in parentheses	
+*** p<0.01, ** p<0.05, * p<0.1	
